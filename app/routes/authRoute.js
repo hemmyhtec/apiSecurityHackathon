@@ -11,12 +11,12 @@ const router = express.Router();
 router.post(
   "/register",
   [
-    body("fullname").notEmpty().withMessage("Fullname is required"),
-    body("email").notEmpty().withMessage("Email is required"),
-    body("password").notEmpty().withMessage("Password is required"),
+    body("fullname").trim().notEmpty().withMessage("Fullname is required"),
+    body("email").trim().isEmail().withMessage("Email is required"),
+    body("password").trim().notEmpty().withMessage("Password is required"),
     validateInput,
     rateLimit,
-    methodLimit([POST]),
+    methodLimit(['POST']),
   ],
   authController.register
 );
@@ -29,7 +29,7 @@ router.post(
     body("password").notEmpty().withMessage("Password is required"),
     validateInput,
     rateLimit,
-    methodLimit([POST]),
+    methodLimit(['POST']),
   ],
   authController.login
 );

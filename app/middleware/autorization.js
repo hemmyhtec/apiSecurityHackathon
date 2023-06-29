@@ -1,5 +1,5 @@
 // Middleware for authorizing requests based on user roles or permissions
-export function authorize(role) {
+function authorize(role) {
   return (req, res, next) => {
     if (req.user.role === role) {
       next();
@@ -8,3 +8,5 @@ export function authorize(role) {
     }
   };
 }
+
+export default authorize

@@ -8,6 +8,7 @@ import passport from 'passport';
 import logger from './log/logger.js';
 import connectDB from './config/database.js';
 import helmet from "helmet"
+import bodyParser from 'body-parser';
 import authRoutes from "./app/routes/authRoute.js"
 import userRoutes from "./app/routes/userRoute.js"
 
@@ -18,6 +19,7 @@ connectDB()
 // Middleware
 app.use(helmet())
 app.use(cors())
+app.use(bodyParser.json())
 app.use(express.urlencoded({ extended: false }));
 app.use(passport.initialize())
 
@@ -31,7 +33,7 @@ if (process.env.NODE_ENV === "development") {
 
 // Routes
 app.use('/auth', authRoutes);
-// app.use('/user', userRoutes);
+app.use('/user', userRoutes);
 
 
 // Start the server

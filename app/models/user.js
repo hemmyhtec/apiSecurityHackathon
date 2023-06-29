@@ -1,6 +1,3 @@
-import dotenv from "dotenv";
-dotenv.config();
-
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
@@ -38,12 +35,9 @@ userSchema.pre('save', function(next) {
 })
 
 //Comparing Password
-userSchema.methods.comparePassword = function(passw, cb){
-  bcrypt.compare(passw, this.password, function(err, isMatch){
-      if(err) return cb(err)
-      cb(null, isMatch)
-  })
-}
+userSchema.methods.comparePassword = function(passw) {
+  return bcrypt.compare(passw, this.password);
+};
 
 //Generate User Token
 userSchema.methods.generateJWT = function(){
