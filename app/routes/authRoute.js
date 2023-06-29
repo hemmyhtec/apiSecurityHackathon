@@ -12,7 +12,7 @@ router.post(
   "/register",
   [
     body("fullname").trim().notEmpty().withMessage("Fullname is required"),
-    body("email").trim().isEmail().withMessage("Email is required"),
+    body("email").trim().isEmail().withMessage("Please provide a valid email").notEmpty().withMessage("Email is required"),
     body("password").trim().notEmpty().withMessage("Password is required"),
     validateInput,
     rateLimit,
@@ -25,8 +25,8 @@ router.post(
 router.post(
   "/login",
   [
-    body("email").notEmpty().withMessage("Email is required"),
-    body("password").notEmpty().withMessage("Password is required"),
+    body("email").trim().isEmail().withMessage("Please provide a valid email").notEmpty().withMessage("Email is required"),
+    body("password").trim().notEmpty().withMessage("Password is required"),
     validateInput,
     rateLimit,
     methodLimit(['POST']),
