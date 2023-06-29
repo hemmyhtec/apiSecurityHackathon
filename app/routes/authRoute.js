@@ -13,7 +13,7 @@ router.post(
   [
     body("fullname").trim().notEmpty().withMessage("Fullname is required"),
     body("email").trim().isEmail().withMessage("Please provide a valid email").notEmpty().withMessage("Email is required"),
-    body("password").trim().notEmpty().withMessage("Password is required"),
+    body("password").trim().notEmpty().withMessage("Password is required").isStrongPassword().withMessage('Password not strong...Password must contain Alphabet Case, Number & Character'),
     validateInput,
     rateLimit,
     methodLimit(['POST']),
