@@ -1,8 +1,35 @@
 import express from "express";
 import storeController from "../controllers/storeController.js";
+import authenticate from "../middleware/authentication.js";
+import rateLimiter from "../middleware/rateLimiting.js";
+import methodLimiter from "../middleware/methodLimiting.js";
+import { body } from "express-validator";
+import validateInput from "../middleware/inputValidation.js";
 
 const router = express.Router();
 
-router.post("/addStore", storeController.addStore);
+router.post(
+  "/add_store",
+  [
+    body("store_name").trim().notEmpty().withMessage("Store name is required"),
+    body("store_description")
+      .trim()
+      .notEmpty()
+      .withMessage("Store description name is required"),
+    body("store_address")
+      .trim()
+      .notEmpty()
+      .withMessage("Store address is required"),
+    body("store_phoneNumber")
+      .trim()
+      .notEmpty()
+      .withMessage("Store phone number is required"),
+    validateInput,
+    authenticate,
+    rateLimiter,
+    methodLimiter(["POST"]),
+  ],
+  storeController.addStore
+);
 
 export default router;

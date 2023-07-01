@@ -15,45 +15,44 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   role: { type: String, enum: ["user", "admin"], default: "user" },
+  stores: { type: String },
+  products: { type: [String] },
 });
 
 //Hashing Users Password
-userSchema.pre('save', function(next) {
+userSchema.pre("save", function (next) {
   var user = this;
-  if(this.isModified('password') || this.isNew ) {
-      bcrypt.genSalt(10, function(err, salt) {
-          if(err) return next(err);
-          bcrypt.hash(user.password, salt, function(err, hash) {
-              if(err) return next(err);
-              user.password = hash;
-              next()
-          })
-      })
+  if (this.isModified("password") || this.isNew) {
+    bcrypt.genSalt(10, function (err, salt) {
+      if (err) return next(err);
+      bcrypt.hash(user.password, salt, function (err, hash) {
+        if (err) return next(err);
+        user.password = hash;
+        next();
+      });
+    });
   } else {
-      return  next();
+    return next();
   }
-})
+});
 
 //Comparing Password
-userSchema.methods.comparePassword = function(passw) {
+userSchema.methods.comparePassword = function (passw) {
   return bcrypt.compare(passw, this.password);
 };
 
 //Generate User Token
-userSchema.methods.generateJWT = function(){
-
+userSchema.methods.generateJWT = function () {
   let payload = {
-      id: this._id,
-      email: this.email,
-      fullname: this.fullname,
-  }
+    id: this._id,
+    email: this.email,
+    fullname: this.fullname,
+  };
 
   return jwt.sign(payload, jwtConfig.jwtSecret, {
-      expiresIn: jwtConfig.jwtExpiration
-  })
-}
-
+    expiresIn: jwtConfig.jwtExpiration,
+  });
+};
 
 const User = mongoose.model("User", userSchema);
 export default User;
-

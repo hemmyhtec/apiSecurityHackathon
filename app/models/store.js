@@ -12,24 +12,24 @@ const storeSchema = new mongoose.Schema({
     ref: User,
     required: true,
   },
-  name: {
+  store_name: {
     type: String,
     required: true
   },
-  description: {
+  store_description: {
     type: String,
     required: true
   },
-  address: {
+  store_address: {
     type: String,
     required: true
   },
-  phoneNumber: {
+  store_phoneNumber: {
     type: String,
     required: true
   }
 });
 
-const Store = mongoose.model("store", storeSchema);
+const Store = mongoose.model("Store", storeSchema);
 
 export default Store;
