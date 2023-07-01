@@ -1,10 +1,16 @@
-import { Schema, model } from "mongoose";
+import mongoose from "mongoose";
+import  User  from "./user.js";
 import { v4 as uuidv4 } from "uuid";
 
-const storeSchema = new Schema({
+const storeSchema = new mongoose.Schema({
   _id: {
     type: String,
     default: uuidv4
+  },
+  userId: {
+    type: String,
+    ref: "User",
+    required: true,
   },
   name: {
     type: String,
@@ -24,6 +30,6 @@ const storeSchema = new Schema({
   }
 });
 
-const Store = model("store", storeSchema);
+const Store = mongoose.model("store", storeSchema);
 
 export default Store;

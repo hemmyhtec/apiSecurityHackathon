@@ -3,9 +3,10 @@ import storeSchema from "../models/store.js";
 const storeController = {
   addStore: async (req, res) => {
     try {
-      const { name, description, address, phoneNumber } = req.body;
+      const { userId, name, description, address, phoneNumber } = req.body;
 
       const store = new storeSchema({
+        userId,
         name,
         description,
         address,
@@ -13,12 +14,14 @@ const storeController = {
       });
 
       await store.save();
-      return res.status(200).json({ message: "Data saved successfully" });
+      return res.status(200).json({ message: "Store saved successfully" });
     } catch (err) {
       console.log(err.message);
       return res
         .status(500)
-        .json({ error: "Failed to save data to the database" });
+        .json({error: "Failed to save store to the database",
+        msg: err.message      
+      });
     }
   },
 };
