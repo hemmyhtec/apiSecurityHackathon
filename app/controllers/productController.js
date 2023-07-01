@@ -3,9 +3,11 @@ import Product from "../models/product.js";
 const productController = {
   addProduct: async (req, res) => {
     try {
-      const { title, description, price, image } = req.body;
+      const { userId, storeId, title, description, price, image } = req.body;
 
       const product = new Product({
+        userId,
+        storeId,
         title,
         description,
         price,
