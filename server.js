@@ -12,6 +12,7 @@ import bodyParser from 'body-parser';
 import authRoutes from "./app/routes/authRoute.js"
 import userRoutes from "./app/routes/userRoute.js"
 import storeRoutes from "./app/routes/storeRoute.js"
+import productRoutes from "./app/routes/productRoute.js"
 
 
 
@@ -37,6 +38,7 @@ if (process.env.NODE_ENV === "development") {
 app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
 app.use('/store', storeRoutes);
+app.use('/product', productRoutes);
 
 
 // Start the server
