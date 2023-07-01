@@ -11,6 +11,8 @@ import helmet from "helmet"
 import bodyParser from 'body-parser';
 import authRoutes from "./app/routes/authRoute.js"
 import userRoutes from "./app/routes/userRoute.js"
+import storeRoutes from "./app/routes/storeRoute.js"
+
 
 
 const app = express()
@@ -34,6 +36,7 @@ if (process.env.NODE_ENV === "development") {
 // Routes
 app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
+app.use('/store', storeRoutes);
 
 
 // Start the server
