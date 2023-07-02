@@ -10,7 +10,7 @@ const productController = {
       const user = await User.findById(req.user.userId);
       if (!user) return res.status(404).json({ message: "User not found" });
 
-      
+
       const store = await Store.findOne({userId: user._id})
       if (!store) return res.status(404).json({ message: "Please create a store!" });
 
@@ -35,10 +35,13 @@ const productController = {
         userId: user._id
       });
 
-      await product.save();
-      return res.status(200).json({ message: "Product saved successfully" });
+       await product.save();
+
+       // Update the User schema to include the new product reference
+      await User.findByIdAndUpdate(user._id, { $addToSet: { products: product._id } });
+
+      return res.status(200).json({ message: "Product saved successfully", product });
     } catch (err) {
-      console.log(err.message);
       return res
         .status(500)
         .json({ error: "Failed to save product to the database" });

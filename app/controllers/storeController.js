@@ -23,7 +23,10 @@ const storeController = {
       });
 
       await store.save();
-      return res
+
+    // Update the User schema to include the new store reference
+    await User.findByIdAndUpdate(user._id, { $addToSet: { stores: store._id } });
+    return res
         .status(200)
         .json({ message: "Congratulation! Store created succesfully" });
     } catch (err) {
@@ -39,8 +42,8 @@ const storeController = {
     try {
       const user = await User.findById(req.user.userId);
       if (!user) return res.status(404).json({ message: "User not found" });
-      const userId = user._id
-      const store = await storeSchema.findOne({userId: userId})
+
+      const store = await storeSchema.findOne({userId: user._id})
       if (!store) return res.status(404).json({ message: "Please create a store!" });
 
       store.store_name = req.body.store_name
@@ -83,7 +86,9 @@ const storeController = {
   
       const store = await storeSchema.findOne({ userId: user._id });
       if (!store) return res.status(404).json({ message: "Store not found" });
-  
+      
+
+
       return res.status(200).json({ store });
     } catch (error) {
       return res.status(500).json({
