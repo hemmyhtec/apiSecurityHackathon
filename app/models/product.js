@@ -1,6 +1,4 @@
 import { Schema, model } from "mongoose";
-import  User  from "./user.js";
-import  Store  from "./store.js";
 import { v4 as uuidv4 } from "uuid";
 
 const productSchema = new Schema({
