@@ -1,15 +1,29 @@
+import uploadImageToCloudinary from "../../config/cloudinary.js";
 import Product from "../models/product.js";
 
 const productController = {
   addProduct: async (req, res) => {
     try {
-      const { title, description, price, image } = req.body;
+
+      const {
+        product_title,
+        product_description,
+        product_category,
+        product_price,
+        product_stock,
+        product_image,
+      } = req.body;
+
+      console.log(product_title, product_description)
+      const imageUrl = uploadImageToCloudinary(product_image)
 
       const product = new Product({
-        title,
-        description,
-        price,
-        image
+        product_title,
+        product_description,
+        product_category,
+        product_price,
+        product_stock,
+        product_image: imageUrl
       });
 
       await product.save();

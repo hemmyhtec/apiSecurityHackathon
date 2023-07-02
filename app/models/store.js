@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import  User  from "./user.js";
 import { v4 as uuidv4 } from "uuid";
 
 const storeSchema = new mongoose.Schema({

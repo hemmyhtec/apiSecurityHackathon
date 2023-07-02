@@ -1,8 +1,35 @@
 import express from "express";
 import productController from "../controllers/productController.js";
+import { body } from "express-validator";
+import validateInput from "../middleware/inputValidation.js";
+import rateLimiter from "../middleware/rateLimiting.js";
+import methodLimiter from "../middleware/methodLimiting.js";
+import authenticate from "../middleware/authentication.js";
 
 const router = express.Router();
 
-router.post("/addProduct", productController.addProduct);
+router.post("/add_product", [
+    body("product_title").trim().notEmpty().withMessage("Product title is required"),
+    body("product_description")
+      .trim()
+      .notEmpty()
+      .withMessage("Product description name is required"),
+    body("product_category")
+      .trim()
+      .notEmpty()
+      .withMessage("Product category is required"),
+    body("product_price")
+      .trim()
+      .notEmpty()
+      .withMessage("Product price is required"),
+    body("product_stock")
+      .trim()
+      .notEmpty()
+      .withMessage("Product stock is required"),
+    validateInput,
+    authenticate,
+    rateLimiter,
+    methodLimiter(["POST"]),
+  ], productController.addProduct);
 
 export default router;

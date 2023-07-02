@@ -6,22 +6,45 @@ const productSchema = new Schema({
     type: String,
     default: uuidv4
   },
-  title: {
+  product_title: {
     type: String,
     required: true
   },
-  description: {
+  product_description: {
     type: String,
     required: true
   },
-  price: {
+  product_category: {
     type: String,
     required: true
   },
-  image: {
+  product_price: {
+    type: String,
+    required: true
+  },
+  product_stock: {
+    type: String,
+    required: true
+  },
+  product_availability: {
+    type: Boolean,
+    default: true,
+    required: true
+  },
+  product_image: {
     data: Buffer,          
     contentType: String,        
-  }
+  },
+  userId: {
+    type: String,
+    ref: "User",
+    required: true,
+  },
+  storeId: {
+    type: String,
+    ref: "Store",
+    required: true,
+  },
 
 });
 
