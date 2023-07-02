@@ -44,18 +44,48 @@ passport.use(
       try {
         const userId = payload.id;
 
+        // Check if the token has expired
+        const currentTime = Date.now() / 1000;
+        if (payload.exp < currentTime) {
+          return done(null, false, { message: 'Token has expired' });
+        }
+
+        // Check if the user exists
         const user = await User.findById(userId);
-        if (!user) return done(null, false);
+        if (!user) {
+          return done(null, false, { message: 'User not found' });
+        }
 
         done(null, { userId: user._id });
       } catch (error) {
-
         done(error, false);
       }
     }
   )
 );
 
-const authenticate = passport.authenticate("jwt", { session: false });
+
+const authenticate = (req, res, next) => {
+  passport.authenticate("jwt", { session: false }, (err, user, info) => {
+    if (err) {
+      return res.status(500).json({
+        error: "Internal server error",
+        message: err.message,
+      });
+    }
+
+    if (!user) {
+      if (info && info.message === "Token has expired") {
+        return res.status(401).json({ message: "Token has expired" });
+      } else {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
+    }
+
+    req.user = user;
+    next();
+  })(req, res, next);
+};
+
 
 export default authenticate;
