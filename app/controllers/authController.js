@@ -35,7 +35,10 @@ const authController = {
 
       const token = user.generateJWT();
 
-      res.json({ token });
+      res.json({ 
+      msg: "User is logged in",
+      token 
+      });
     })(req, res, next);
   },
 };
