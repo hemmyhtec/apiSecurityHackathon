@@ -9,7 +9,7 @@ const storeSchema = new mongoose.Schema({
   },
   userId: {
     type: String,
-    ref: "User",
+    ref: User,
     required: true,
   },
   store_name: {
