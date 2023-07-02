@@ -9,11 +9,12 @@ cloudinary.config({
   });
 
 const uploadImageToCloudinary = (imageFile) => {
+
    return new Promise((resolve, reject) => {
-    console.log(imageFile)
     cloudinary.uploader.upload(imageFile.tempFilePath, (error, result) => {
         if(error){
             reject(error)
+            console.log(error)
         } else {
             resolve(result.secure_url)
         }

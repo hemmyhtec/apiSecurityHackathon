@@ -31,10 +31,10 @@ const productSchema = new Schema({
     default: true,
     required: true
   },
-  product_image: {
-    data: Buffer,          
-    contentType: String,        
-  },
+  // product_image: {
+  //   data: Buffer,          
+  //   contentType: String,        
+  // },
   userId: {
     type: String,
     ref: "User",
