@@ -9,6 +9,7 @@ import logger from './log/logger.js';
 import connectDB from './config/database.js';
 import helmet from "helmet"
 import bodyParser from 'body-parser';
+import treblle from '@treblle/express';
 import authRoutes from "./app/routes/authRoute.js"
 import userRoutes from "./app/routes/userRoute.js"
 import storeRoutes from "./app/routes/storeRoute.js"
@@ -25,6 +26,14 @@ app.use(cors())
 app.use(bodyParser.json())
 app.use(express.urlencoded({ extended: false }));
 app.use(passport.initialize())
+
+// Monitoring with Treblle Middleware
+app.use(
+  treblle({
+    apiKey: process.env.TREBLLE_API_KEY,
+    projectId: process.env.TREBLLE_PROJECT_ID,
+  })
+)
 
 let PORT = process.env.PORT
 
