@@ -14,6 +14,7 @@ import authRoutes from "./app/routes/authRoute.js";
 import userRoutes from "./app/routes/userRoute.js";
 import storeRoutes from "./app/routes/storeRoute.js";
 import productRoutes from "./app/routes/productRoute.js";
+import cartRoute from "./app/routes/cartRoute.js";
 
 const app = express();
 connectDB();
@@ -79,6 +80,7 @@ app.use("/auth", authRoutes);
 app.use("/user", userRoutes);
 app.use("/store", storeRoutes);
 app.use("/product", productRoutes);
+app.use("/cart", cartRoute);
 
 // Start the server
 app.listen(PORT, () => logger.info(`APP Started on Port --- ${PORT}`));

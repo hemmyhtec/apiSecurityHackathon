@@ -1,6 +1,4 @@
 import User from "../models/user.js";
-import Store from "../models/store.js";
-import Product from "../models/product.js";
 
 //Get user Profile
 const userProfile = {
