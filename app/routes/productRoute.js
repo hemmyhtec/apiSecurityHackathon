@@ -58,5 +58,13 @@ router.put("/update_product/:id", [
     methodLimiter(["PUT"]),
 ], productController.updateProduct)
 
+// Delete Route
+router.delete("/delete_product/:id", [
+    authenticate,
+    rateLimiter,
+    methodLimiter(["DELETE"]),
+], productController.deleteProduct)
+
+
 
 export default router;
