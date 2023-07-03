@@ -24,6 +24,18 @@ const userSchema = new mongoose.Schema({
     type: String,
     ref: 'Product',
   }],
+  cart: [
+    {
+      product: {
+        type: String,
+        ref: 'Product'
+      },
+      quantity: {
+        type: Number,
+        default: 1
+      }
+    }
+  ]
 });
 
 //Hashing Users Password

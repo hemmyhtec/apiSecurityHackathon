@@ -86,7 +86,7 @@ const storeController = {
       const user = await User.findById(req.user.userId);
       if (!user) return res.status(404).json({ message: "User not found" });
   
-      const store = await storeSchema.findOne({ userId: user._id });
+      const store = await storeSchema.findOne({ userId: user._id }).populate('products');
       if (!store) return res.status(404).json({ message: "Store not found" });
       
 

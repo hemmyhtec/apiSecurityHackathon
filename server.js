@@ -14,6 +14,8 @@ import authRoutes from "./app/routes/authRoute.js";
 import userRoutes from "./app/routes/userRoute.js";
 import storeRoutes from "./app/routes/storeRoute.js";
 import productRoutes from "./app/routes/productRoute.js";
+import cartRoute from "./app/routes/cartRoute.js";
+import rateLimiter from "./app/middleware/rateLimiting.js";
 
 const app = express();
 connectDB();
@@ -21,6 +23,7 @@ connectDB();
 // Middleware
 app.use(helmet());
 app.use(cors());
+app.use(rateLimiter)
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -65,6 +68,7 @@ app.use(
   treblle({
     apiKey: process.env.TREBLLE_API_KEY,
     projectId: process.env.TREBLLE_PROJECT_ID,
+    additionalFieldsToMask: ["Bearer"],
   })
 );
 
@@ -79,6 +83,7 @@ app.use("/auth", authRoutes);
 app.use("/user", userRoutes);
 app.use("/store", storeRoutes);
 app.use("/product", productRoutes);
+app.use("/cart", cartRoute);
 
 // Start the server
 app.listen(PORT, () => logger.info(`APP Started on Port --- ${PORT}`));
