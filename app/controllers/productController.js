@@ -138,11 +138,30 @@ const productController = {
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: "Error updating product details" });      
-    }
-      
+    }   
+  }, 
+
+  // Search Product Controller
+  SearchProduct: async(req, res) => {
+      try {
+        const { search } = req.body;        
+        
+        // Find products that match the search query
+        const products = await Product.find(
+          { $text: { $search: search } },
+          { score: { $meta: 'textScore' } }
+        ).sort({ score: { $meta: 'textScore' } });
+
+        if (products.length === 0) {
+          return res.status(404).json({ message: 'No products found' });
+        }
+    
+        res.status(200).json({ products });
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Error searching products" });
+      }
   }
-
-
 
   // END OF CONTROLLER
 };

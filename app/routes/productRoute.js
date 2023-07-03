@@ -69,5 +69,20 @@ router.put(
   productController.updateProduct
 );
 
+// Search product endpoint 
+router.get(
+  "/search_product",
+  [
+    body("search")
+      .trim()
+      .notEmpty()
+      .withMessage("Search field is required"),
+    validateInput,
+    authenticate,
+    methodLimiter(["GET"]),
+  ],
+  productController.SearchProduct
+);
+
 
 export default router;
