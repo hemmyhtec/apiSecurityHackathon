@@ -1,7 +1,6 @@
 import express from "express";
 import { body } from "express-validator";
 import validateInput from "../middleware/inputValidation.js";
-import rateLimit from "../middleware/rateLimiting.js";
 import methodLimit from "../middleware/methodLimiting.js";
 import authController from "../controllers/authController.js";
 
@@ -15,7 +14,6 @@ router.post(
     body("email").trim().isEmail().withMessage("Please provide a valid email").notEmpty().withMessage("Email is required"),
     body("password").trim().notEmpty().withMessage("Password is required").isStrongPassword().withMessage('Password not strong...Password must contain Alphabet Case, Number & Character'),
     validateInput,
-    rateLimit,
     methodLimit(['POST']),
   ],
   authController.register
@@ -28,7 +26,6 @@ router.post(
     body("email").trim().isEmail().withMessage("Please provide a valid email").notEmpty().withMessage("Email is required"),
     body("password").trim().notEmpty().withMessage("Password is required"),
     validateInput,
-    rateLimit,
     methodLimit(['POST']),
   ],
   authController.login

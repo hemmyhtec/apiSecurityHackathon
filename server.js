@@ -15,6 +15,7 @@ import userRoutes from "./app/routes/userRoute.js";
 import storeRoutes from "./app/routes/storeRoute.js";
 import productRoutes from "./app/routes/productRoute.js";
 import cartRoute from "./app/routes/cartRoute.js";
+import rateLimiter from "./app/middleware/rateLimiting.js";
 
 const app = express();
 connectDB();
@@ -22,6 +23,7 @@ connectDB();
 // Middleware
 app.use(helmet());
 app.use(cors());
+app.use(rateLimiter)
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

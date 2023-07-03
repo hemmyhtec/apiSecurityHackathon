@@ -2,7 +2,6 @@ import express from "express";
 import { body } from "express-validator";
 import authenticate from "../middleware/authentication.js";
 import { authorize } from "../middleware/authorization.js";
-import rateLimit from "../middleware/rateLimiting.js";
 import methodLimit from "../middleware/methodLimiting.js";
 import cartController from "../controllers/cartController.js";
 
@@ -16,7 +15,6 @@ router.post(
       .notEmpty()
       .withMessage("Quantity is required"),
     authenticate,
-    rateLimit,
     methodLimit(["POST"]),
   ],
   cartController.addtoCart
@@ -29,7 +27,6 @@ router.put(
         .notEmpty()
         .withMessage("Quantity is required"),
       authenticate,
-      rateLimit,
       methodLimit(["PUT"]),
     ],
     cartController.updateCart
@@ -42,7 +39,6 @@ router.put(
         .notEmpty()
         .withMessage("Quantity is required"),
       authenticate,
-      rateLimit,
       methodLimit(["DELETE"]),
     ],
     cartController.removeCart

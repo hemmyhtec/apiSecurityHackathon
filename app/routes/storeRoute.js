@@ -1,7 +1,6 @@
 import express from "express";
 import storeController from "../controllers/storeController.js";
 import authenticate from "../middleware/authentication.js";
-import rateLimiter from "../middleware/rateLimiting.js";
 import methodLimiter from "../middleware/methodLimiting.js";
 import { body } from "express-validator";
 import validateInput from "../middleware/inputValidation.js";
@@ -26,7 +25,7 @@ router.post(
       .withMessage("Store phone number is required"),
     validateInput,
     authenticate,
-    rateLimiter,
+
     methodLimiter(["POST"]),
   ],
   storeController.addStore
@@ -49,7 +48,7 @@ router.put(
       .withMessage("Store phone number is required"),
     validateInput,
     authenticate,
-    rateLimiter,
+
     methodLimiter(["PUT"]),
   ],
   storeController.updateStore
@@ -58,7 +57,6 @@ router.put(
 router.delete(
   "/delete_store",
   authenticate,
-  rateLimiter,
   methodLimiter(["DELETE"]),
   storeController.deleteStore
 );
@@ -66,7 +64,6 @@ router.delete(
 router.get(
   "/get_store",
   authenticate,
-  rateLimiter,
   methodLimiter(["GET"]),
   storeController.getStore
 );
