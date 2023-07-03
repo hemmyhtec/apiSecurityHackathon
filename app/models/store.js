@@ -32,12 +32,10 @@ const storeSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  products: {
+  products: [{
     type: String,
-    ref: "Product",
-    required: true,
-    default: uuid
-  },
+    ref: 'Product',
+  }],
 });
 
 const Store = mongoose.model("Store", storeSchema);

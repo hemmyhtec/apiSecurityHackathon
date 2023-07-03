@@ -96,12 +96,16 @@ const productController = {
 
      const userId = user._id
 
+
      // check if the user has a store
      const store = await storeSchema.findOne({userId: userId})
      if (!store) return res.status(404).json({ message: "Please create a store!" });
 
+ 
      const products = await Product.find({userId: userId})
+
      res.status(200).json({ products });
+
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: "Error updating product details" });

@@ -9,8 +9,13 @@ import authenticate from "../middleware/authentication.js";
 
 const router = express.Router();
 // Add product route
-router.post("/add_product", [
-    body("product_title").trim().notEmpty().withMessage("Product title is required"),
+router.post(
+  "/add_product",
+  [
+    body("product_title")
+      .trim()
+      .notEmpty()
+      .withMessage("Product title is required"),
     body("product_description")
       .trim()
       .notEmpty()
@@ -31,11 +36,18 @@ router.post("/add_product", [
     authenticate,
     rateLimiter,
     methodLimiter(["POST"]),
-  ], productController.addProduct);
+  ],
+  productController.addProduct
+);
 
 // Update Route
-router.put("/update_product/:id", [
-  body("product_title").trim().notEmpty().withMessage("Product title is required"),
+router.put(
+  "/update_product/:id",
+  [
+    body("product_title")
+      .trim()
+      .notEmpty()
+      .withMessage("Product title is required"),
     body("product_description")
       .trim()
       .notEmpty()
@@ -56,7 +68,14 @@ router.put("/update_product/:id", [
     authenticate,
     rateLimiter,
     methodLimiter(["PUT"]),
-], productController.updateProduct)
+  ],
+  productController.updateProduct
+);
 
+router.get(
+  "/get_user_product",
+  [authenticate, rateLimiter, methodLimiter(["GET"]), ],
+  productController.getAllUserProduct
+);
 
 export default router;
