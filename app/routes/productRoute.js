@@ -1,6 +1,7 @@
 import express from "express";
 import productController from "../controllers/productController.js";
 import { body } from "express-validator";
+import { authorization } from "../middleware/authorization.js";
 import validateInput from "../middleware/inputValidation.js";
 import rateLimiter from "../middleware/rateLimiting.js";
 import methodLimiter from "../middleware/methodLimiting.js";
@@ -33,7 +34,7 @@ router.post("/add_product", [
   ], productController.addProduct);
 
 // Update Route
-router.put("/updateProduct", [
+router.put("/update_product/:id", [
   body("product_title").trim().notEmpty().withMessage("Product title is required"),
     body("product_description")
       .trim()
@@ -51,6 +52,10 @@ router.put("/updateProduct", [
       .trim()
       .notEmpty()
       .withMessage("Product stock is required"),
+    validateInput,
+    authenticate,
+    rateLimiter,
+    methodLimiter(["PUT"]),
 ], productController.updateProduct)
 
 

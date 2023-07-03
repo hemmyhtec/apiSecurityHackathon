@@ -1,4 +1,5 @@
 import uploadImageToCloudinary from "../../config/cloudinary.js";
+import mongoose from "mongoose";
 import storeSchema from "../models/store.js";
 import Product from "../models/product.js";
 import User from "../models/user.js";
@@ -52,12 +53,14 @@ const productController = {
       const user = await User.findById(req.user.userId);
       if (!user) return res.status(404).json({ message: "User not found" });  
 
-      // check is the user has a store
-      const store = await storeSchema.findOne(user._id)
+      const userId = user._id
+
+      // check if the user has a store
+      const store = await storeSchema.findOne({userId: userId})
       if (!store) return res.status(404).json({ message: "Please create a store!" });
 
       // check for a product by id 
-      const product = await Product.findOne(user._id)
+      const product = await Product.findById(req.params.id)
       if (!product) return res.status(404).json({ message: "Please create a store!" });
       
       // Update the product details

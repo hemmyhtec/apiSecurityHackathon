@@ -1,7 +1,7 @@
 import express from "express";
 import { body } from "express-validator";
 import authenticate from "../middleware/authentication.js";
-import autorization from "../middleware/autorization.js";
+import { authorize } from "../middleware/authorization.js";
 import rateLimit from "../middleware/rateLimiting.js";
 import methodLimit from "../middleware/methodLimiting.js";
 import userProfile from "../controllers/userController.js";
@@ -18,7 +18,7 @@ router.get(
 // Update user profile
 router.put(
   "/profile",
-  [authenticate, autorization("user"), rateLimit, methodLimit(["PUT"])],
+  [authenticate, authorize("user"), rateLimit, methodLimit(["PUT"])],
   userProfile.updateProfile
 );
 
