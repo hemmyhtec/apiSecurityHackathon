@@ -1,10 +1,14 @@
 import { Schema, model } from "mongoose";
 import { v4 as uuidv4 } from "uuid";
 
+const uuid = uuidv4();
+
+
 const productSchema = new Schema({
   _id: {
     type: String,
-    default: uuidv4
+    default: uuid,
+    required: true
   },
   product_title: {
     type: String,
@@ -39,15 +43,17 @@ const productSchema = new Schema({
     type: String,
     ref: "User",
     required: true,
+    default: uuid
   },
   storeId: {
     type: String,
     ref: "Store",
     required: true,
+    default: uuid
   },
 
 });
 
-const Product = model("product", productSchema);
+const Product = model("Product", productSchema);
 
 export default Product;

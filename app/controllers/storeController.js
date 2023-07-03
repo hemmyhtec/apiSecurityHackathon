@@ -25,7 +25,7 @@ const storeController = {
       await store.save();
 
     // Update the User schema to include the new store reference
-    await User.findByIdAndUpdate(user._id, { $addToSet: { stores: store._id } });
+    await User.findByIdAndUpdate(user._id, { $push: { stores: store._id } });
     return res
         .status(200)
         .json({ message: "Congratulation! Store created succesfully" });
@@ -52,6 +52,8 @@ const storeController = {
       store.store_phoneNumber = req.body.store_phoneNumber
 
       const newStore = await store.save()
+
+      await User.findByIdAndUpdate(user._id, { $push: { stores: newStore._id } });
       return res.status(200).json({ message: "Store updated successfully", store: newStore });
 
     } catch (error) {

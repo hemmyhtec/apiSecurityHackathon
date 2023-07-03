@@ -15,6 +15,7 @@
     "@treblle/express": "^0.0.6",
     "bcrypt": "^5.0.1",
     "body-parser": "^1.20.2",
+    "bson-objectid": "^2.0.4",
     "cloudinary": "^1.37.3",
     "cors": "^2.8.5",
     "cross-env": "^7.0.3",

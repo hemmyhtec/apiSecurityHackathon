@@ -8,7 +8,7 @@ const userProfile = {
     try {
       const userId = req.user.userId;
 
-      const user = await User.findById(userId).select("-password").exec();
+      const user = await User.findById(userId).select("-password").populate(['stores', 'products']).exec();
 
       if (!user) {
         return res.status(404).json({ message: "User not found" });

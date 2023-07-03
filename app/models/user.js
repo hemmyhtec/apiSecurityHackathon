@@ -6,6 +6,7 @@ import { jwtConfig } from "../../config/jwt.js";
 
 const uuid = uuidv4();
 
+
 const userSchema = new mongoose.Schema({
   _id: {
     type: String,
@@ -15,8 +16,14 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   role: { type: String, enum: ["user", "admin"], default: "user" },
-  stores: { type: String },
-  products: { type: [String] },
+  stores: [{
+    type: String,
+    ref: 'Store',
+  }],
+  products: [{
+    type: String,
+    ref: 'Product',
+  }],
 });
 
 //Hashing Users Password

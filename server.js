@@ -20,10 +20,10 @@ connectDB();
 
 // Middleware
 app.use(helmet());
-app.use(setXFrameOptionsHeader);
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(passport.initialize());
 
 // Set security headers middleware
@@ -51,6 +51,8 @@ app.use((req, res, next) => {
     "Strict-Transport-Security",
     "max-age=15552000; includeSubDomains"
   );
+
+  res.setHeader('Content-Type', 'application/json');
 
   // Access-Control-Allow-Origin
   // res.setHeader("Access-Control-Allow-Origin", "https://your-domain.com");

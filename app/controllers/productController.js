@@ -39,7 +39,8 @@ const productController = {
        await product.save();
 
        // Update the User schema to include the new product reference
-      await User.findByIdAndUpdate(user._id, { $addToSet: { products: product._id } });
+      await User.findByIdAndUpdate(user._id, { $push: { products: product._id } });
+      await Store.findByIdAndUpdate(store._id, { $push: { products: product._id } });
 
       return res.status(200).json({ message: "Product saved successfully", product });
     } catch (err) {
@@ -84,9 +85,29 @@ const productController = {
       console.error(error);
       res.status(500).json({ message: "Error updating product details" });
     }    
-  }
+  },
 
-  // The end of the controller 
+  getAllUserProduct: async (req, res) => {
+
+    try {
+      // authorize the user 
+     const user = await User.findById(req.user.userId);
+     if (!user) return res.status(404).json({ message: "User not found" });  
+
+     const userId = user._id
+
+     // check if the user has a store
+     const store = await storeSchema.findOne({userId: userId})
+     if (!store) return res.status(404).json({ message: "Please create a store!" });
+
+     const products = await Product.find({userId: userId})
+     res.status(200).json({ products });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Error updating product details" });
+    }
+  
+  }
 };
 
 export default productController;
