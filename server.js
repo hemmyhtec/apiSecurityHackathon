@@ -87,3 +87,5 @@ app.use("/cart", cartRoute);
 
 // Start the server
 app.listen(PORT, () => logger.info(`APP Started on Port --- ${PORT}`));
+
+export default app;
