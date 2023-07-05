@@ -1,4 +1,4 @@
-import uploadImageToCloudinary from "../../config/cloudinary.js";
+//import uploadImageToCloudinary from "../../config/cloudinary.js";
 import mongoose from "mongoose";
 import storeSchema from "../models/store.js";
 import Product from "../models/product.js";
