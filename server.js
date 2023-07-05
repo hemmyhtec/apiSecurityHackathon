@@ -84,6 +84,11 @@ app.use("/user", userRoutes);
 app.use("/store", storeRoutes);
 app.use("/product", productRoutes);
 app.use("/cart", cartRoute);
+app.get("/home", (req, res) => {
+  res.status(200).json("You are welcome")
+})
 
 // Start the server
 app.listen(PORT, () => logger.info(`APP Started on Port --- ${PORT}`));
+
+export default app;

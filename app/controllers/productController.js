@@ -44,6 +44,7 @@ const productController = {
 
       return res.status(200).json({ message: "Product saved successfully", product });
     } catch (err) {
+      console.log(err.message)
       return res
         .status(500)
         .json({ error: "Failed to save product to the database" });
@@ -63,7 +64,7 @@ const productController = {
       const store = await storeSchema.findOne({userId: userId})
       if (!store) return res.status(404).json({ message: "Please create a store!" });
 
-      // check for a product by id 
+      // check for a product by id
       const product = await Product.findById(req.params.id)
       if (!product) return res.status(404).json({ message: "Please create a store!" });
       
@@ -87,6 +88,7 @@ const productController = {
     }    
   },
 
+  // Get all product 
   getAllUserProduct: async (req, res) => {
 
     try {
@@ -111,7 +113,57 @@ const productController = {
       res.status(500).json({ message: "Error updating product details" });
     }
   
+  },
+
+  // Delete product controller
+  deleteProduct: async(req, res) => {
+    try {
+      // find the user
+      const user = await User.findById(req.user.userId);
+      if (!user) return res.status(404).json({ message: "User not found" });
+
+      const userId = user._id
+      // check if the user has a store
+      const store = await storeSchema.findOne({userId: userId})
+      if (!store) return res.status(404).json({ message: "Please create a store!" });
+
+      // find and delete product by Id
+      const { id } = req.params;
+      const product = await Product.findOneAndDelete({ _id: id, storeId: store._id });
+
+      if (!product) return res.status(404).json({ message: "Product not found" });
+
+      res.status(200).json({ message: "Product deleted successfully" });       
+
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Error updating product details" });      
+    }   
+  }, 
+
+  // Search Product Controller
+  SearchProduct: async(req, res) => {
+      try {
+        const { search } = req.body;        
+        
+        // Find products that match the search query
+        const products = await Product.find(
+          { $text: { $search: search } },
+          { score: { $meta: 'textScore' } }
+        ).sort({ score: { $meta: 'textScore' } });
+
+        if (products.length === 0) {
+          return res.status(404).json({ message: 'No products found' });
+        }
+    
+        res.status(200).json({ products });
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Error searching products" });
+      }
   }
+
+  // END OF CONTROLLER
 };
 
 export default productController;
