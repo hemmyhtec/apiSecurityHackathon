@@ -13,10 +13,10 @@ To start, follow these steps:
 
 Clone the project: Open your terminal or command prompt and navigate to the directory where you want to clone the project. Use the following command:
 
-# Step one:
+# Step 1:
 git clone https://github.com/hemmyhtec/apiSecurityHackathon
 
-# Step two:
+# Step 2:
 cd <project_directory>
 
 # Step 3:
