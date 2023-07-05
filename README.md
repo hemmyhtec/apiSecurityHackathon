@@ -1,4 +1,4 @@
-lo fol# apiSecurityHackathon
+# apiSecurityHackathon
 
 This guide will walk you through the process of starting this project.
 
