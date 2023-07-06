@@ -5,7 +5,7 @@ import express from "express";
 import morgan from "morgan";
 import cors from "cors";
 import passport from "passport";
-import logger from "./log/logger.js";
+// import logger from "./log/logger.js";
 import connectDB from "./config/database.js";
 import helmet from "helmet";
 import bodyParser from "body-parser";
@@ -89,6 +89,6 @@ app.get("/home", (req, res) => {
 })
 
 // Start the server
-app.listen(PORT, () => logger.info(`APP Started on Port --- ${PORT}`));
+app.listen(PORT, () => console.log(`APP Started on Port --- ${PORT}`));
 
 export default app;
