@@ -84,8 +84,9 @@ app.use("/user", userRoutes);
 app.use("/store", storeRoutes);
 app.use("/product", productRoutes);
 app.use("/cart", cartRoute);
+// for quick test purpose
 app.get("/home", (req, res) => {
-  res.status(200).json("You are welcome")
+  res.status(200).json("You are welcome to the API Security hackaton")
 })
 
 // Start the server
