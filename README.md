@@ -25,11 +25,11 @@ Install dependences by running: npm install
 # Step 4: 
 Create .env file in the root of the folder and add the followings: 
 
-DATABASE_URL=mongodb+srv://hemmyPromise:40u4uL14O5mAZyv9@cluster0.n6kuzaq.mongodb.net/?retryWrites=true&w=majority
-SECRET_CODE=9ac6b6aee6036bf7bfd76546d84934292b022bf96ad911a2c8af9802a1eef094
+DATABASE_URL=
+SECRET_CODE=
 PORT=8000
-TREBLLE_API_KEY=JRGeJ3XNBmos0Q20NGxDFhsNyoXtSve6
-TREBLLE_PROJECT_ID=6plSpIri9fc5S37i
+TREBLLE_API_KEY=
+TREBLLE_PROJECT_ID=
 
 # Final Step:
 Start the Node.js application: After installing the dependencies and configuring the project, you can start the Node.js application. Run the following command:
