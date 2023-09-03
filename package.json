@@ -4,10 +4,9 @@
   "main": "server.js",
   "type": "module",
   "engines": {
-    "node": "16.x"
+    "node": "18.x"
   },
   "scripts": {
-    "build": "node server.js",
     "start": "node server.js",
     "dev": "cross-env NODE_ENV=development nodemon server"
   },
@@ -37,7 +36,9 @@
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
     "pino": "^8.14.1",
-    "pino-pretty": "^10.0.0",
     "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "pino-pretty": "^10.0.1"
   }
 }
